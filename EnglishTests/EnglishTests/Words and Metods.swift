@@ -56,18 +56,30 @@ var foodWordsQuestion = [
     "кокос" : "coconut",
 ]
 
+let happyMemojies = [
+    "🙃","😇","😏","🥳","🤩","🤪","🤗","🤤"
+]
+
+let sadMemojies = [
+"😖", "😩", "😥", "😵‍💫", "😭", "😔", "😣", "😒"
+]
+
+
 var foodWordsAnswer = [String]()
 
 
 
-var questionQountValue = 0
+var questionQountValue = 1
 var trueAnswers = 0 //кол-во правильных ответов
 var answer = 0 //флаг правильного ответа при нажатии кнопки
 var testWord = ""
 
 extension TestsViewController {
+    @objc private func successfullyBookedFlight() {
+        HapticsManager.shared.vibrate(for: .success)
+    } //вибро
     
- 
+    
     func addFoodWordsAnswer(Dictionary: [String : String]) -> [String] {
         for values in Dictionary {
             foodWordsAnswer.append("\(Dictionary.values)")
@@ -86,7 +98,8 @@ extension TestsViewController {
             secondAnswerButton.isEnabled = false
             thirdAnswerButton.isEnabled = false
             forthAnswerButton.isEnabled = false
-//            questionLabel.font = UIFont(name: questionLabel.font.fontName, size: 35)
+            memojiLabel.text = happyMemojies.randomElement()
+
         } else {
             firstAnswerButton.backgroundColor = .red
             secondAnswerButton.backgroundColor = .red
@@ -96,6 +109,9 @@ extension TestsViewController {
             secondAnswerButton.isEnabled = false
             thirdAnswerButton.isEnabled = false
             forthAnswerButton.isEnabled = false
+            memojiLabel.text = sadMemojies.randomElement()
+            successfullyBookedFlight()
+
         }
     }
     
@@ -108,6 +124,8 @@ extension TestsViewController {
             firstAnswerButton.isEnabled = false
             thirdAnswerButton.isEnabled = false
             forthAnswerButton.isEnabled = false
+            memojiLabel.text = happyMemojies.randomElement()
+
         } else {
             firstAnswerButton.backgroundColor = .red
             secondAnswerButton.backgroundColor = .red
@@ -117,6 +135,9 @@ extension TestsViewController {
             secondAnswerButton.isEnabled = false
             thirdAnswerButton.isEnabled = false
             forthAnswerButton.isEnabled = false
+            memojiLabel.text = sadMemojies.randomElement()
+            successfullyBookedFlight()
+
         }
     }
     
@@ -130,6 +151,8 @@ extension TestsViewController {
             firstAnswerButton.isEnabled = false
             secondAnswerButton.isEnabled = false
             forthAnswerButton.isEnabled = false
+            memojiLabel.text = happyMemojies.randomElement()
+
         } else {
             firstAnswerButton.backgroundColor = .red
             secondAnswerButton.backgroundColor = .red
@@ -139,6 +162,9 @@ extension TestsViewController {
             secondAnswerButton.isEnabled = false
             thirdAnswerButton.isEnabled = false
             forthAnswerButton.isEnabled = false
+            memojiLabel.text = sadMemojies.randomElement()
+            successfullyBookedFlight()
+
         }
     }
     
@@ -152,6 +178,8 @@ extension TestsViewController {
             firstAnswerButton.isEnabled = false
             secondAnswerButton.isEnabled = false
             thirdAnswerButton.isEnabled = false
+            memojiLabel.text = happyMemojies.randomElement()
+
         } else {
             firstAnswerButton.backgroundColor = .red
             secondAnswerButton.backgroundColor = .red
@@ -161,33 +189,33 @@ extension TestsViewController {
             secondAnswerButton.isEnabled = false
             thirdAnswerButton.isEnabled = false
             forthAnswerButton.isEnabled = false
+            memojiLabel.text = sadMemojies.randomElement()
+            successfullyBookedFlight()
+
         }
     }
 
     
     
     func nextQuestionFalse() { //функция при неправильном ответе
+        memojiLabel.text = "🤔"
         answer = 0
-        firstAnswerButton.backgroundColor = .systemGray2
-        secondAnswerButton.backgroundColor = .systemGray2
-        thirdAnswerButton.backgroundColor = .systemGray2
-        forthAnswerButton.backgroundColor = .systemGray2
-        questionLabel.backgroundColor = .systemGray2
-
+        firstAnswerButton.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
+        secondAnswerButton.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
+        thirdAnswerButton.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
+        forthAnswerButton.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
+        questionLabel.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
         firstAnswerButton.isEnabled = true
         secondAnswerButton.isEnabled = true
         thirdAnswerButton.isEnabled = true
         forthAnswerButton.isEnabled = true
-        
         firstAnswerButton.layer.cornerRadius = 10
         secondAnswerButton.layer.cornerRadius = 10
         thirdAnswerButton.layer.cornerRadius = 10
         forthAnswerButton.layer.cornerRadius = 10
-        
         questionLabel.layer.masksToBounds = true
         questionLabel.layer.cornerRadius = 10
 
-        
         questionQount.text = String(questionQountValue)
 
         if questionQountValue < 11 {
@@ -200,7 +228,6 @@ extension TestsViewController {
             let randomAnswerThree = foodWordsQuestion.randomElement()?.value
             let randomanswerFour = foodWordsQuestion.randomElement()?.value
          
-            
             let randomAnswers = [randomAnswerOne, randomanswerTwo, randomAnswerThree, randomanswerFour]
             let shuffleRandomAnswers = randomAnswers.shuffled()
 
@@ -215,21 +242,28 @@ extension TestsViewController {
             
             foodWordsQuestion.removeValue(forKey: questionLabel.text ?? "") //ИСКЛЮЧАЕТ ПРЕДЫДУЩЕЕ СЛОВО
 
-            
-        } else if questionQountValue == 11 {
-            questionQountValue = 0
-            dismiss(animated: true)
+        }
+ else if questionQountValue == 11 {
+     questionQountValue = 1
+     //ТУТ СДЕЛАТЬ ОПОВЕЩЕНИЕ О РЕЗУЛЬТАТАХ ТЕСТА
+     
+     dismiss(animated: true)
         }
     }
+        
+
+    
     
     func nextQuestion() { //функция при правильном ответе
+        memojiLabel.text = "🤔"
+
         trueAnswers = trueAnswers + 1
         answer = 0
-        firstAnswerButton.backgroundColor = .systemGray2
-        secondAnswerButton.backgroundColor = .systemGray2
-        thirdAnswerButton.backgroundColor = .systemGray2
-        forthAnswerButton.backgroundColor = .systemGray2
-        questionLabel.backgroundColor = .systemGray2
+        firstAnswerButton.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
+        secondAnswerButton.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
+        thirdAnswerButton.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
+        forthAnswerButton.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
+        questionLabel.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
 
         firstAnswerButton.isEnabled = true
         secondAnswerButton.isEnabled = true
@@ -251,7 +285,6 @@ extension TestsViewController {
             questionQountValue = questionQountValue + 1
 
             let randomQuestion = foodWordsQuestion.randomElement()
-
             let randomAnswerOne = randomQuestion?.value
             let randomanswerTwo = foodWordsQuestion.randomElement()?.value
             let randomAnswerThree = foodWordsQuestion.randomElement()?.value
@@ -271,15 +304,17 @@ extension TestsViewController {
             trueAnswersLabel.text = String(trueAnswers)
           
             foodWordsQuestion.removeValue(forKey: questionLabel.text ?? "") //ИСКЛЮЧАЕТ ПРЕДЫДУЩЕЕ СЛОВО
-
-        
-        } else if questionQountValue == 11 {
-            questionQountValue = 0
-            dismiss(animated: true)
         }
-    }
+        
+        
+        else if questionQountValue == 11 {
+            questionQountValue = 1
+            //ТУТ СДЕЛАТЬ ОПОВЕЩЕНИЕ О РЕЗУЛЬТАТАХ ТЕСТА
 
+            dismiss(animated: true)
     
+    }
+    }
     
 }
 
@@ -288,4 +323,6 @@ extension TestsViewController {
 
 
 
+
+    
 
