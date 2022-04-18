@@ -264,7 +264,6 @@ extension TestsViewController {
         thirdAnswerButton.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
         forthAnswerButton.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
         questionLabel.backgroundColor = UIColor.init(red: 40/255, green: 38/255, blue: 38/255, alpha: 1)
-
         firstAnswerButton.isEnabled = true
         secondAnswerButton.isEnabled = true
         thirdAnswerButton.isEnabled = true
